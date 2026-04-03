@@ -1,36 +1,33 @@
-import 'package:family_app/DesignScreen/HS/ContactsDetails/Add_Member.dart';
-import 'package:family_app/DesignScreen/HS/ContactsDetails/ContactsDetails.dart';
-import 'package:family_app/DesignScreen/HS/ContactsDetails/Contacts_Controller.dart';
+import 'package:family_app/DesignScreen/HS/ContactsDetails/Explore_Contacts_Controller.dart';
 import 'package:family_app/DesignScreen/HS/LoginScreen/Login_Screen_Controller.dart';
-import 'package:family_app/DesignScreen/HS/UpdateProfile/Update_Profile.dart';
-import 'package:family_app/Helpers/app_colors.dart';
-import 'package:family_app/Helpers/app_svgs.dart';
-import 'package:family_app/TextTheme/text_theme.dart';
-import 'package:family_app/Widgets/Buttons/active_icon_button.dart';
-import 'package:family_app/Widgets/Container/Contacts_Container.dart';
-import 'package:family_app/Widgets/TextFormFields/app_searchbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../Helpers/app_colors.dart';
+import '../../../Helpers/app_svgs.dart';
+import '../../../TextTheme/text_theme.dart';
+import '../../../Widgets/Buttons/active_icon_button.dart';
+import '../../../Widgets/Container/Contacts_Container.dart';
+import '../../../Widgets/TextFormFields/app_searchbar.dart';
 import '../Chat/Chat_Screen.dart';
+import '../UpdateProfile/Update_Profile.dart';
+import 'Add_Member.dart';
+import 'ContactsDetails.dart';
 
-class Contacts extends StatefulWidget {
 
-  const Contacts({super.key, required this.automaticallyImplyLeading,});
+class ExploreContacts extends StatefulWidget {
+  const ExploreContacts({super.key});
 
-  final bool automaticallyImplyLeading;
   @override
-  State<Contacts> createState() => _ContactsState();
+  State<ExploreContacts> createState() => _ExploreContactsState();
 }
 
-class _ContactsState extends State<Contacts> {
+class _ExploreContactsState extends State<ExploreContacts> {
 
   final LoginScreenController loginScreenController = Get.put(LoginScreenController());
-
-  final ContactsController contactsController = Get.put(ContactsController());
+  final ExploreContactsController exploreContactsController = Get.put(ExploreContactsController());
 
   Future<void> _callNumber(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -49,27 +46,18 @@ class _ContactsState extends State<Contacts> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    contactsController.mainMemberAll("");
+    exploreContactsController.mainMember("house_main_person");
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: widget.automaticallyImplyLeading,
         scrolledUnderElevation: 0,
         elevation: 0,
         backgroundColor: AppColors.white,
-        title: Text( "Members",style: Theme.of(context).textTheme.bodyBold.copyWith(color: AppColors.text),),
-        // actions: [
-        //   Visibility(
-        //     visible: loginScreenController.addVidhi.value,
-        //     child: SvgPicture.string(AppSvgs.treeUser),),
-        //   SizedBox(width: 16,)
-        // ],
+        title: Text("Explore Contacts",style: Theme.of(context).textTheme.bodyBold.copyWith(color: AppColors.text),),
       ),
       body: Column(
         spacing: 16,
@@ -77,14 +65,13 @@ class _ContactsState extends State<Contacts> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: AppSearchbar(controller: contactsController.search,onChange: contactsController.runFilter,),
+            child: AppSearchbar(controller: exploreContactsController.search,onChange: exploreContactsController.runFilter,),
           ),
           Obx(() {
-            if(contactsController.get.value){
-              print("sjdfsdfhsdfjsdf get ");
+            if(exploreContactsController.getValue.value){
               return ListView.builder(
-                controller: contactsController.scrollController,
-                itemCount: contactsController.listOfMemberAll.length,
+                controller: exploreContactsController.scrollController,
+                itemCount: 6,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -121,27 +108,51 @@ class _ContactsState extends State<Contacts> {
                 },
               );
             }
-            else if(contactsController.listOfMemberAll.isEmpty){
-              print("sjdfsdfhsdfjsdf empty ");
-              return Expanded(
-                child: Center(
-                  child: Text("No Data Found",
-                    style: Theme.of(context).textTheme.bodyBold.copyWith(color: AppColors.text),),
-                ),
-              );
-            }
             else{
-              print("sjdfsdfhsdfjsdf");
               return Expanded(
                 child: ListView.builder(
-                  controller: contactsController.scrollController,
+                  controller: exploreContactsController.scrollController,
                   shrinkWrap: true,
-                  itemCount: contactsController.listOfMemberAll.length,
+                  itemCount: exploreContactsController.listOfMember.length,
                   itemBuilder: (context, index) {
-                    final member = contactsController.listOfMemberAll[index];
+                    if(index == exploreContactsController.listOfMember.length){
+                      if(exploreContactsController.isLoadingMore.value){
+                        return  Obx(() => Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      CircleAvatar(radius: 20, backgroundColor: Colors.white),
+                                      SizedBox(width: 10),
+                                      Container(height: 10, width: 100, color: Colors.white),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Container(height: 10, width: double.infinity, color: Colors.white),
+                                  SizedBox(height: 5),
+                                  Container(height: 10, width: double.infinity, color: Colors.white),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),);
+                      }
+                    }
+                    final member = exploreContactsController.listOfMember[index];
                     return GestureDetector(
                         onTap: (){
-                          FocusScope.of(context).unfocus();
+                          FocusScope.of(context).nextFocus();
                           Get.to(ContactsDetails(
                             image: member["profile_img"] ?? "",
                             name: member["name"] ?? "",
@@ -150,15 +161,14 @@ class _ContactsState extends State<Contacts> {
                             connectNo: member["mobile_no"] ?? "",
                             fullFamilyName: "${member["father"]?["name"] ?? ""} ${member["father"]?["surname"] ?? ""}",
                             profession: member["profession"] ?? "",
-                            maritalStatus: member["husband_wife_of"] == null ? "unmarried" : "married",
-                            dateOfBirth: member["dob"] ?? "",
+                            maritalStatus: 'hrll',
+                            dateOfBirth: 'jd',
                             permanentLocation: 'jdf',
                             residentLocation: 'kfk',
-                            id: member["id"],
+                            id: member['id'],
                           ),
-                              transition: Transition.fadeIn,duration: Duration(milliseconds: 100))?.then((value) {  contactsController.mainMemberAll("");
-                          FocusScope.of(context).unfocus();});
-                          FocusScope.of(context).unfocus();
+                              transition: Transition.fadeIn,duration: Duration(milliseconds: 100));
+                          FocusScope.of(context).nextFocus();
 
                         },
                         child: ContactsContainer(
@@ -167,8 +177,8 @@ class _ContactsState extends State<Contacts> {
                           profession: (member["profession"] ?? "").toString(),
                           familyName: "${(member["father"]?["name"] ?? "").toString()} ${(member["father"]?["surname"] ?? "").toString()}".trim(),
                           contactNo: (member["mobile_no"] ?? "").toString(),
-                          callIcon: member["mobile_no"] == null ? "" : AppSvgs.phone,
-                          chatIcon: member["mobile_no"] == null ? "" : AppSvgs.chat,
+                          callIcon:  AppSvgs.phone,
+                          chatIcon: AppSvgs.chat,
                           blockIcon: AppSvgs.blockedUser,
                           editIcon: AppSvgs.edit1,
                           onTapCall: () {
@@ -176,11 +186,7 @@ class _ContactsState extends State<Contacts> {
                           },
                           onTapChat: () {
                             Get.to(
-                              ChatScreen(name: "${(member["name"] ?? "").toString()} ${(member["surname"] ?? "").toString()}",
-                                profileImg: member["profile_img"] ?? "",
-                                memberId: member["id"],
-                                groupId: '',
-                                createdBy: '',),
+                              ChatScreen(name: '', profileImg: '', memberId: '', groupId: '', createdBy: '',),
                               transition: Transition.fadeIn,
                               duration: const Duration(milliseconds: 100),
                             );
@@ -195,10 +201,14 @@ class _ContactsState extends State<Contacts> {
                   },),
               );
             }
-          },
-          )
+          })
         ],
       ),
+      floatingActionButton: Visibility(
+          visible: loginScreenController.addVidhi.value,
+          child: ActiveIconButton(onTap: (){
+            Get.to(AddMember(),transition: Transition.fadeIn,duration: Duration(milliseconds: 100));
+          }, text: "Add Member", icon: AppSvgs.add)),
     );
   }
 }

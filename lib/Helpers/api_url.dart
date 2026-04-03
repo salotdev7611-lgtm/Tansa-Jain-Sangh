@@ -40,4 +40,7 @@ class ApiUrl {
   static const String groupMember = "group_members";
   static const String messages = "messages";
   static const String readMsg = "read_msg";
+  static const String mainMember = "super_main_members";
+  static const String gujaratiCalendar = "gujarati_calendar";
+
 }

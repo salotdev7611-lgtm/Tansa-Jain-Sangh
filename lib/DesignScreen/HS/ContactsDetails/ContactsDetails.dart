@@ -234,85 +234,88 @@ class _ContactsDetailsState extends State<ContactsDetails> {
                     ],
                   ),
                   Text("Relations",style: Theme.of(context).textTheme.bodyBold.copyWith(color: AppColors.text),),
-                  Row(
-                    spacing: 8,
-                    children: [
-                      contactsController.listOfMemberDetails.first["father"] == null
-                          ? SizedBox()
-                          : Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: AppColors.grey,width: 2),
-                                  image: DecorationImage(image: contactsController.listOfMemberDetails[0]["father"]["profile_img"] == null || contactsController.listOfMemberDetails[0]["father"]["profile_img"] == ""
-                                      ? AssetImage("assets/images/no-image.png")
-                                      : NetworkImage(contactsController.listOfMemberDetails[0]["father"]["profile_img"]),
-                                      fit: BoxFit.contain
-                                  )
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      spacing: 8,
+                      children: [
+                        contactsController.listOfMemberDetails.first["father"] == null
+                            ? SizedBox()
+                            : Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColors.grey,width: 2),
+                                    image: DecorationImage(image: contactsController.listOfMemberDetails[0]["father"]["profile_img"] == null || contactsController.listOfMemberDetails[0]["father"]["profile_img"] == ""
+                                        ? AssetImage("assets/images/no-image.png")
+                                        : NetworkImage(contactsController.listOfMemberDetails[0]["father"]["profile_img"]),
+                                        fit: BoxFit.contain
+                                    )
+                                ),
                               ),
                             ),
-                          ),
-                          Center(child: Text("${contactsController.listOfMemberDetails[0]["father"]?["name"] ?? ""} ${contactsController.listOfMemberDetails[0]["father"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1Bold.copyWith(color: AppColors.text),)),
-                          Center(child: Text("Father")),
-                        ],
-                      ),
-                      contactsController.listOfMemberDetails.first["father"] == null
-                          ? SizedBox()
-                          : Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: AppColors.grey,width: 2),
-                                  image: DecorationImage(image: contactsController.listOfMemberDetails[0]["mother"]["profile_img"] == null || contactsController.listOfMemberDetails[0]["mother"]["profile_img"] == ""
-                                      ? AssetImage("assets/images/no-image.png")
-                                      : NetworkImage(contactsController.listOfMemberDetails[0]["mother"]["profile_img"]),
-                                      fit: BoxFit.contain
-                                  )
+                            Center(child: Text("${contactsController.listOfMemberDetails[0]["father"]?["name"] ?? ""} ${contactsController.listOfMemberDetails[0]["father"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1Bold.copyWith(color: AppColors.text),)),
+                            Center(child: Text("Father")),
+                          ],
+                        ),
+                        contactsController.listOfMemberDetails.first["father"] == null
+                            ? SizedBox()
+                            : Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColors.grey,width: 2),
+                                    image: DecorationImage(image: contactsController.listOfMemberDetails[0]["mother"]["profile_img"] == null || contactsController.listOfMemberDetails[0]["mother"]["profile_img"] == ""
+                                        ? AssetImage("assets/images/no-image.png")
+                                        : NetworkImage(contactsController.listOfMemberDetails[0]["mother"]["profile_img"]),
+                                        fit: BoxFit.contain
+                                    )
+                                ),
                               ),
                             ),
-                          ),
-                          Center(child: Text("${contactsController.listOfMemberDetails[0]["mother"]?["name"] ?? ""} ${contactsController.listOfMemberDetails[0]["mother"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1Bold.copyWith(color: AppColors.text),)),
-                          Center(child: Text("Mother")),
-                        ],
-                      ),
-                      contactsController.listOfMemberDetails[0]["husband_wife_of"] == null
-                      ?SizedBox()
-                      : Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: AppColors.grey,width: 2),
-                                  image: DecorationImage(image: contactsController.listOfMemberDetails[0]["husband_wife_of"]["profile_img"] == null || contactsController.listOfMemberDetails[0]["husband_wife_of"]["profile_img"] == ""
-                                      ? AssetImage("assets/images/no-image.png")
-                                      : NetworkImage(contactsController.listOfMemberDetails[0]["husband_wife_of"]["profile_img"]),
-                                      fit: BoxFit.contain
-                                  )
+                            Center(child: Text("${contactsController.listOfMemberDetails[0]["mother"]?["name"] ?? ""} ${contactsController.listOfMemberDetails[0]["mother"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1Bold.copyWith(color: AppColors.text),)),
+                            Center(child: Text("Mother")),
+                          ],
+                        ),
+                        contactsController.listOfMemberDetails[0]["husband_wife_of"] == null
+                        ?SizedBox()
+                        : Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColors.grey,width: 2),
+                                    image: DecorationImage(image: contactsController.listOfMemberDetails[0]["husband_wife_of"]["profile_img"] == null || contactsController.listOfMemberDetails[0]["husband_wife_of"]["profile_img"] == ""
+                                        ? AssetImage("assets/images/no-image.png")
+                                        : NetworkImage(contactsController.listOfMemberDetails[0]["husband_wife_of"]["profile_img"]),
+                                        fit: BoxFit.contain
+                                    )
+                                ),
                               ),
                             ),
-                          ),
-                          Center(child: Text("${contactsController.listOfMemberDetails[0]["husband_wife_of"]?["name"] ?? ""} ${contactsController.listOfMemberDetails[0]["husband_wife_of"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1Bold.copyWith(color: AppColors.text),)),
-                          Center(child: Text(contactsController.listOfMemberDetails.first["husband_wife_of"]["gender"] == "m" ? "Husband" : "Wife")),
-                        ],
-                      ),
-                    ],
+                            Center(child: Text("${contactsController.listOfMemberDetails[0]["husband_wife_of"]?["name"] ?? ""} ${contactsController.listOfMemberDetails[0]["husband_wife_of"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1Bold.copyWith(color: AppColors.text),)),
+                            Center(child: Text(contactsController.listOfMemberDetails.first["husband_wife_of"]["gender"] == "m" ? "Husband" : "Wife")),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   // Text("Full Family Name",style: Theme.of(context).textTheme.body2Regular.copyWith(color: AppColors.grey),),
                   // Text(widget.fullFamilyName,style: Theme.of(context).textTheme.body1Regular.copyWith(color: AppColors.text),),
@@ -337,6 +340,7 @@ class _ContactsDetailsState extends State<ContactsDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Date of Birth",style: Theme.of(context).textTheme.body2Regular.copyWith(color: AppColors.grey),),
+                          contactsController.listOfMemberDetails[0]["dob"] == null ?SizedBox() :
                           Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(contactsController.listOfMemberDetails[0]["dob"] ?? "")),style: Theme.of(context).textTheme.body1Regular.copyWith(color: AppColors.text),),
                         ],
                       ),

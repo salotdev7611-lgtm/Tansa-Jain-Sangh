@@ -64,7 +64,7 @@ dependencies:
   date_picker_plus: ^6.0.0
   change_app_package_name:
   gif_view: ^1.0.3
-
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

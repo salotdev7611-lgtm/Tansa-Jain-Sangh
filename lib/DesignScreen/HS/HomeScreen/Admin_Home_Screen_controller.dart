@@ -246,9 +246,11 @@ class AdminHomeScreenController extends GetxController{
 
 
       if (response.statusCode == 200) {
+
         postModel.value = PostModel.fromJson(jsonDecode(response.body));
         print("post post ${postModel.value.data?.length}");
         final responseData = jsonDecode(response.body);
+
         if (responseData["success"] == true) {
 
           List<Map<String,dynamic>> data = List<Map<String,dynamic>>.from(responseData["data"]);

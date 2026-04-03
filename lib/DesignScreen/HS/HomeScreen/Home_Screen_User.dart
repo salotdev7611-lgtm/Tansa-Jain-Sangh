@@ -151,7 +151,7 @@ class _HomeScreenUserState extends State<HomeScreenUser> {
                       onTap: (){
                         loginScreenController.addVidhi.value = false;
                         Get.to(
-                          Contacts(automaticallyImplyLeading: true, isFormConnect: false,),
+                          Contacts(automaticallyImplyLeading: true,),
                           transition: Transition.fadeIn,
                           duration: Duration(milliseconds: 100),
                         );

@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:family_app/DesignScreen/HS/Add%20Member/Add_Member.dart';
 import 'package:family_app/DesignScreen/HS/Add%20Member/Add_Member_Controller.dart';
 import 'package:family_app/DesignScreen/HS/Add%20Member/Select_Father.dart';
 import 'package:family_app/DesignScreen/HS/Add%20Member/Select_Father_Controller.dart';
+import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Bottom_Nav_Bar.dart';
+import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Home_Screen.dart';
+import 'package:family_app/DesignScreen/HS/HomeScreen/Home_Screen_Bottom_Drawer.dart';
 import 'package:family_app/Helpers/api_url.dart';
 import 'package:family_app/Helpers/app_colors.dart';
 import 'package:family_app/TextTheme/text_theme.dart';
@@ -19,6 +23,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:typed_data';
 import '../../../Widgets/RadioButtons/app_radio_button_controller.dart';
+import '../HomeScreen/Bottom_Nav_Bar_Drawer.dart';
 import '../LoginScreen/LoginScreen.dart';
 
 class HomeAddController extends GetxController {
@@ -72,6 +77,21 @@ class HomeAddController extends GetxController {
         final responseData = jsonDecode(response.body);
         if(responseData["success"] == true){
           checkData.value = List<Map<String,dynamic>>.from(responseData["data"]);
+
+          if(checkData.first["family_house_id"]["id"] != null && checkData.first["role"] == "Admin"){
+            print("1");
+            Get.to(AdminBottomNavBar(),transition: Transition.fadeIn,duration: Duration(milliseconds: 100));
+          }
+          else if(checkData.first["family_house_id"]["id"] != null && checkData.first["role"] == "User"){
+            print("2");
+            Get.to(BottomNavBarDrawer(),transition: Transition.fadeIn,duration: Duration(milliseconds: 100));
+          }
+          else{
+            print("3");
+            Get.to(AddMemberUser(),transition: Transition.fadeIn,duration: Duration(milliseconds: 100));
+          }
+
+
           addMemberController.memberId.value = checkData[0]["id"].toString();
           addMemberController.name.text = checkData[0]["name"].toString();
           addMemberController.lastName.value.dropDownValue = DropDownValueModel(

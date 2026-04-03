@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Bottom_Nav_Bar.dart';
 import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Home_Screen.dart';
@@ -8,10 +8,8 @@ import 'package:family_app/DesignScreen/HS/LoginScreen/OTP_Controller.dart';
 import 'package:family_app/DesignScreen/HS/vidhi/Add_Vidhi_Controller.dart';
 import 'package:family_app/Helpers/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Helpers/api_url.dart';
 import '../../../TextTheme/text_theme.dart';
@@ -21,8 +19,6 @@ class AdminSettingController extends GetxController {
   final LoginScreenController loginScreenController = Get.put(LoginScreenController());
   final AppColors appColors = Get.put(AppColors());
   final AddVidhiController addVidhiController = Get.put(AddVidhiController());
-
-
 
   /// Dropdown controllers
   RxList<TextEditingController> surname = RxList<TextEditingController>();
@@ -82,6 +78,7 @@ class AdminSettingController extends GetxController {
   RxString old_surname = "".obs;
   RxString deleteSurnames = "".obs;
   RxString deleteProfession = "".obs;
+
 
   ///profession_master
   Future<bool> addProfessions(context) async{
@@ -988,8 +985,6 @@ class AdminSettingController extends GetxController {
     }
   }
 
-
-
   /// Create MaterialColor from Color
   MaterialColor _createMaterialColor(Color color) {
     final Map<int, Color> swatch = {};
@@ -1011,4 +1006,7 @@ class AdminSettingController extends GetxController {
 
     return MaterialColor(color.value, swatch);
   }
+
 }
+
+

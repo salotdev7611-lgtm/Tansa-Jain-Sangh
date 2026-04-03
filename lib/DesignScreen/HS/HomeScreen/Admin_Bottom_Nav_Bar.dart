@@ -39,7 +39,7 @@ class _AdminBottomNavBarState extends State<AdminBottomNavBar> {
     List<Widget> screens = adminSettingController.status.value == true
         ? [
       AdminHomeScreen(),
-      Contacts(automaticallyImplyLeading: false, isFormConnect: false,),
+      Contacts(automaticallyImplyLeading: false,),
       ChatAll(),
       Parentage(),
       Vidhi(automaticallyImplyLeading: false),
@@ -47,7 +47,7 @@ class _AdminBottomNavBarState extends State<AdminBottomNavBar> {
     ]
         : [
       AdminHomeScreen(),
-      Contacts(automaticallyImplyLeading: false, isFormConnect: false,),
+      Contacts(automaticallyImplyLeading: false,),
       Parentage(),
       Vidhi(automaticallyImplyLeading: false),
       FamilyTreePage2(),

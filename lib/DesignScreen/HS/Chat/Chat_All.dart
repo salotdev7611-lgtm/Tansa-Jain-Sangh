@@ -193,7 +193,8 @@ class _ChatAllState extends State<ChatAll> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(chatAllController.getTimeDifferenceAsString(chat["last_message_time"] ?? ""),
+                                  chat["last_message_time"] == null ?SizedBox():
+                                  Text(chatAllController.getTimeDifferenceAsString(chat["last_message_time"]),
                                       style: Theme.of(context).textTheme.bodyRegular),
                                   SizedBox(height: 8),
                                   chat["unread_msg"] == "0"

@@ -11,8 +11,10 @@ import 'package:family_app/Widgets/CustomTabs/app_tab_icons_bars_controller.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:gif_view/gif_view.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../Helpers/api_url.dart';
 import '../../../Helpers/app_colors.dart';
@@ -334,11 +336,23 @@ class _HomeScreenBottomDrawerState extends State<HomeScreenBottomDrawer>{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Obx(() {
-                    if(addEventController.get.value){
-                      return Center(child: CircularProgressIndicator());
+                    if (addEventController.get.value) {
+                      return Center(child:  Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(
+                          width: 100.w,
+                          height: 180,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),);
                     }
-                    if(addEventController.listOfEvent.isEmpty){
-                      return Center(child: Text("No Event Found"));
+                    if (addEventController.listOfEvent.isEmpty) {
+                      return GifView.asset("assets/images/no-event.gif",);
                     }
                     else {
                       return CarouselSlider.builder(
@@ -377,8 +391,7 @@ class _HomeScreenBottomDrawerState extends State<HomeScreenBottomDrawer>{
                         ),
                       );
                     }
-                  }
-                  ),
+                  }),
                   Obx(() {
                     return Column(
                       spacing: 18,
@@ -405,89 +418,148 @@ class _HomeScreenBottomDrawerState extends State<HomeScreenBottomDrawer>{
                         ),
 
                         Obx(() {
-                          if(adminHomeScreenController.get.value){
-                            return CircularProgressIndicator();
-                          }
-                          else if(adminHomeScreenController.listOfPost.isEmpty){
-                            return Text("No Post Found");
-                          }
-                          else{
+                          if (adminHomeScreenController.get.value) {
                             return ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: 5,
                               shrinkWrap: true,
-                              itemCount: adminHomeScreenController.listOfPost.length,
+                              physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
-                                final post = adminHomeScreenController.listOfPost[index];
-                                return Obx(() => InkWell(
-                                  onTap: (){
-                                    Get.to(FeedDetails(
-                                      postMsg: post["content"],
-                                      memberId: post["posted_by"]["id"] ?? "",
-                                      profileImg: post["posted_by"]["profile_img"] ?? "assets/images/no-image.png" ,
-                                      name: '${post["posted_by"]["name"]} ${post["posted_by"]["surname"]}',
-                                      postTime: adminHomeScreenController.getTimeDifferenceAsString("${post["datetime"]}"),
-                                      postId: post["id"],
-                                      likeNumber: post["likes"],
-                                      commentNumber: post["comments"],
-                                      likeSvg: adminHomeScreenController.likeData[index]
-                                          ? AppSvgs.likeFilled
-                                          : AppSvgs.likeOutline,
-                                      index: index,
-                                    ),transition: Transition.fadeIn,duration: Duration(milliseconds: 100));
-                                  },
-                                  child: PostContainer(
-                                    postId: "${post["id"]}",
-                                    profileImg: post["posted_by"]["profile_img"] ?? "assets/images/no-image.png",
-                                    memberId: post["posted_by"]["id"] ?? "",
-                                    userName: "${post["posted_by"]["name"]} ${post["posted_by"]["surname"]}",
-                                    time: adminHomeScreenController.getTimeDifferenceAsString("${post["datetime"]}"),
-                                    svgComment: AppSvgs.comment,
-                                    description: post["content"],
-                                    likeNumber: post["likes"],
-                                    commentNumber: post["comments"],
-                                    saveSvg: adminHomeScreenController.saveListData[index]
-                                        ? AppSvgs.bookMarkFilledStared
-                                        : AppSvgs.bookMarkOutlineStared,
-                                    index: index,
-                                    likeSvg: adminHomeScreenController.likeData[index]
-                                        ? AppSvgs.likeFilled
-                                        : AppSvgs.likeOutline,
-                                    onTapCall: () {
-                                      Get.to(ContactsDetails(
-                                        name: "${post["posted_by"]?["name"] ?? ""} ${post["posted_by"]?["surname"] ?? ""}",
-                                        country: '',
-                                        city: '',
-                                        connectNo: post["posted_by"]?["mobile_no"] ?? "",
-                                        fullFamilyName: '',
-                                        profession: post["posted_by"]?["profession"] ?? "",
-                                        maritalStatus: '',
-                                        dateOfBirth: post["posted_by"]?["dob"]??"",
-                                        permanentLocation: '',
-                                        residentLocation: '',
-                                        image: post["posted_by"]?["profile_img"] ?? "assets/images/no-image.png",
-                                        id: post["posted_by"]["id"],
+                                return Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.grey.shade300,
+                                    highlightColor: Colors.grey.shade100,
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                        transition: Transition.fadeIn,duration: Duration(milliseconds: 100),
-                                      );
-                                      // Get.to(Profile(
-                                      //   profileImg: post["posted_by"]?["profile_img"] ?? "assets/images/no-image.png",
-                                      //   userName: "${post["posted_by"]?["name"] ?? ""} ${post["posted_by"]?["surname"] ?? ""}",
-                                      //   country: 'cccccc',
-                                      //   phoneNumber: post["posted_by"]?["mobile_no"] ?? "",
-                                      //   profession: post["posted_by"]?["profession"] ?? "",
-                                      //   maritalStatus: 'mmmmm',
-                                      //   dateOfBirth: post["posted_by"]?["dob"] ?? "",
-                                      //   permanentLocation: "aaaaaa",
-                                      //   residentLocation:  "safkjhskdf",
-                                      // ),duration: Duration(milliseconds: 100),transition: Transition.fadeIn);
-                                    },
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(radius: 20, backgroundColor: Colors.white),
+                                              SizedBox(width: 10),
+                                              Container(height: 10, width: 100, color: Colors.white),
+                                            ],
+                                          ),
+                                          SizedBox(height: 10),
+                                          Container(height: 10, width: double.infinity, color: Colors.white),
+                                          SizedBox(height: 5),
+                                          Container(height: 10, width: double.infinity, color: Colors.white),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
                                 );
                               },
                             );
                           }
+                          else if (adminHomeScreenController.listOfPost.isEmpty) {
+                            return Text("No Post Found");
+                          }
+                          else {
 
+                            return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: (adminHomeScreenController.postModel.value.data?.length ?? 0) + 1,
+                              itemBuilder: (context, index) {
+                                if (index == adminHomeScreenController.postModel.value.data?.length) {
+                                  return Obx(() =>
+                                  adminHomeScreenController.isLoadingMore.value
+                                      ? Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Center(
+                                        child: CircularProgressIndicator()),
+                                  )
+                                      : SizedBox());
+                                }
+                                final post = adminHomeScreenController.postModel.value.data?[index];
+                                return Obx(() =>
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(FeedDetails(
+                                          postMsg: post?.content ?? "",
+                                          memberId: post?.postedBy?.id ?? "",
+                                          profileImg: post?.postedBy?.profileImg ?? "assets/images/no-image.png",
+                                          name: '${post?.postedBy?.name} ${post?.postedBy?.surname}',
+                                          // name: '${post["posted_by"]["name"]} ${post["posted_by"]["surname"]}',
+                                          postTime: adminHomeScreenController
+                                              .getTimeDifferenceAsString(
+                                              "${post?.datetime}"),
+                                          postId: post?.id ?? "",
+                                          likeNumber: post?.likes,
+                                          commentNumber: post?.comments ?? "",
+                                          likeSvg: adminHomeScreenController
+                                              .likeData[index]
+                                              ? AppSvgs.likeFilled
+                                              : AppSvgs.likeOutline,
+                                          index: index,
+                                        ), transition: Transition.fadeIn,
+                                            duration: Duration(milliseconds: 100));
+                                      },
+                                      child: PostContainer(
+                                        postId: "${post?.id}",
+                                        profileImg: post?.postedBy?.profileImg ??
+                                            "assets/images/no-image.png",
+                                        memberId: post?.postedBy?.id ?? "",
+                                        userName: "${post?.postedBy?.name} ${post?.postedBy?.surname}",
+                                        time: adminHomeScreenController
+                                            .getTimeDifferenceAsString(
+                                            "${post?.datetime}"),
+                                        svgComment: AppSvgs.comment,
+                                        description: post?.content ?? "",
+                                        likeNumber: post?.likes ?? "",
+                                        commentNumber: post?.comments ?? "",
+                                        saveSvg: adminHomeScreenController
+                                            .saveListData[index]
+                                            ? AppSvgs.bookMarkFilledStared
+                                            : AppSvgs.bookMarkOutlineStared,
+                                        index: index,
+                                        likeSvg: adminHomeScreenController
+                                            .likeData[index]
+                                            ? AppSvgs.likeFilled
+                                            : AppSvgs.likeOutline,
+                                        onTapCall: () {
+                                          Get.to(ContactsDetails(
+                                            name: "${post?.postedBy?.name ?? ""} ${post?.postedBy?.surname ?? ""}",
+                                            country: '',
+                                            city: '',
+                                            connectNo: post?.postedBy?.mobileNo ?? "",
+                                            fullFamilyName: '',
+                                            profession: post?.postedBy?.profession ?? "",
+                                            maritalStatus: '',
+                                            dateOfBirth: post?.postedBy?.dob?.toString() ?? "",
+                                            permanentLocation: '',
+                                            residentLocation: '',
+                                            image: post?.postedBy?.profileImg ??
+                                                "assets/images/no-image.png",
+                                            id: post?.postedBy?.id ?? "",
+                                          ),
+                                            transition: Transition.fadeIn,
+                                            duration: Duration(milliseconds: 100),
+                                          );
+                                          // Get.to(Profile(
+                                          //   profileImg: post["posted_by"]?["profile_img"] ?? "assets/images/no-image.png",
+                                          //   userName: "${post["posted_by"]?["name"] ?? ""} ${post["posted_by"]?["surname"] ?? ""}",
+                                          //   country: 'cccccc',
+                                          //   phoneNumber: post["posted_by"]?["mobile_no"] ?? "",
+                                          //   profession: post["posted_by"]?["profession"] ?? "",
+                                          //   maritalStatus: 'mmmmm',
+                                          //   dateOfBirth: post["posted_by"]?["dob"] ?? "",
+                                          //   permanentLocation: "aaaaaa",
+                                          //   residentLocation:  "safkjhskdf",
+                                          // ),duration: Duration(milliseconds: 100),transition: Transition.fadeIn);
+                                        },
+                                      ),
+                                    ),
+                                );
+                              },
+                            );
+                          }
                         },),
                       ],
                     );

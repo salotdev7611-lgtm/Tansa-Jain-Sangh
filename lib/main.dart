@@ -184,7 +184,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),*/
-        home: ApiUrl.token.isNotEmpty ? loginScreenController.role == "Admin" ? AdminBottomNavBar() : BottomNavBarDrawer() : LoginScreen(),
+        home: ApiUrl.token.isNotEmpty && loginScreenController.houseId.value.isNotEmpty ? loginScreenController.role == "Admin" ? AdminBottomNavBar() : BottomNavBarDrawer() : LoginScreen(),
         // home: ApiUrl.token.isNotEmpty ? HomeScreen() : LoginScreen(),
         // home: ApiUrl.token.isNotEmpty ? BottomNavBar() : LoginScreen(),
         // home: ApiUrl.token.isNotEmpty ? BottomNavBarDrawer() : LoginScreen(),

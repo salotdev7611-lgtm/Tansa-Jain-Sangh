@@ -30,7 +30,7 @@ class _BottomNavBarDrawerState extends State<BottomNavBarDrawer> {
 
   final List<Widget> screens = [
     HomeScreenBottomDrawer(),
-    Contacts(automaticallyImplyLeading: false, isFormConnect: false,),
+    Contacts(automaticallyImplyLeading: false,),
     ChatAll(),
     Parentage(),
     Vidhi(automaticallyImplyLeading: false,),

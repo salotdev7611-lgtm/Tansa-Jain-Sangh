@@ -16,50 +16,12 @@ class ContactsController extends GetxController{
   RxList<Map<String,dynamic>> listOfMemberDetails = <Map<String,dynamic>>[].obs;
   RxList<Map<String,dynamic>> listOfMemberAllSearch = <Map<String,dynamic>>[].obs;
 
-  Future<void> mainMember(String type) async{
-    try{
-      get.value = true;
+  ScrollController scrollController = ScrollController();
 
-      final response = await http.get(
-        Uri.parse("${ApiUrl.adminBaseUrl}${ApiUrl.membersList}&type=${type}"),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": ApiUrl.xApikey,
-          "Authorization": ApiUrl.token,
-        },
-      );
-
-      print("gfgfgfgf${ApiUrl.adminBaseUrl}${ApiUrl.membersList}&type=${type}");
-
-      if(response.statusCode == 200){
-        get.value = true;
-        final responseData = jsonDecode(response.body);
-        if(responseData["success"] == true){
-          listOfMember.clear();
-          listOfMember.value = List<Map<String,dynamic>>.from(responseData["data"]);
-          print("Data print main member${listOfMember}");
-          get.value = false;
-
-        }
-        else{
-          get.value = false;
-          print("error msg ${responseData["errorMsg"].toString()}");
-        }
-      }
-      else{
-        get.value = false;
-        print("status code ${response.statusCode}");
-      }
-
-    }
-    catch(error){
-      get.value = false;
-      print("error ${error}");
-    }
-    finally{
-      get.value = false;
-    }
-  }
+  int page = 0;
+  int limit = 8;
+  RxBool isLoadingMore = false.obs;
+  RxBool hasMoreData = true.obs;
 
   Future<void> mainMemberAll(String memberId) async{
     try{
@@ -89,7 +51,6 @@ class ContactsController extends GetxController{
       );
 
       if(response.statusCode == 200){
-        get.value = true;
         final responseData = jsonDecode(response.body);
         if(responseData["success"] == true){
           print("mainMemberAll");
@@ -99,7 +60,63 @@ class ContactsController extends GetxController{
           print("Data print main member All Member${listOfMemberAll}");
           print("member id ${memberId}");
           print("member name ${listOfMemberAll[0]["name"]}");
+        }
+        else{
           get.value = false;
+          print("error msg ${responseData["errorMsg"].toString()}");
+        }
+      }
+      else{
+        get.value = false;
+        print("status code ${response.statusCode}");
+      }
+
+    }
+    catch(error){
+      get.value = false;
+      print("error ${error}");
+    }
+    finally{
+      get.value = false;
+    }
+  }
+  Future<void> loadMainMemberAll(String memberId) async{
+    try{
+      get.value = true;
+
+      Map<String, String> queryParams = {};
+
+      if (memberId.isNotEmpty) {
+        queryParams["m"] = ApiUrl.membersList;
+        queryParams["member_id"] = memberId;
+      }
+      else{
+        queryParams["m"] = ApiUrl.membersList;
+      }
+
+      final url =  Uri.parse("${ApiUrl.baseUrl}").replace(queryParameters: queryParams);
+
+      print("url ${url}");
+
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": ApiUrl.xApikey,
+          "Authorization": ApiUrl.token,
+        },
+      );
+
+      if(response.statusCode == 200){
+        final responseData = jsonDecode(response.body);
+        if(responseData["success"] == true){
+          print("mainMemberAll");
+          listOfMemberAll.clear();
+          listOfMemberAll.value = List<Map<String,dynamic>>.from(responseData["data"]);
+          listOfMemberAllSearch.value = List<Map<String,dynamic>>.from(responseData["data"]);
+          print("Data print main member All Member${listOfMemberAll}");
+          print("member id ${memberId}");
+          print("member name ${listOfMemberAll[0]["name"]}");
         }
         else{
           get.value = false;
@@ -149,7 +166,6 @@ class ContactsController extends GetxController{
       );
 
       if(response.statusCode == 200){
-        get.value = true;
         final responseData = jsonDecode(response.body);
         if(responseData["success"] == true){
           print("mainMemberAll");

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:family_app/DesignScreen/HS/Admin_Setting/Admin_Setting_Controller.dart';
+import 'package:family_app/DesignScreen/HS/ContactsDetails/Explore_Contacts.dart';
 import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Home_Screen_controller.dart';
 import 'package:family_app/DesignScreen/HS/FeedDetailsScreen/Feed_Details.dart';
 import 'package:family_app/DesignScreen/HS/LoginScreen/LoginScreen.dart';
@@ -23,6 +24,7 @@ import 'package:get/get.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../Widgets/Container/Home_Container.dart';
 import '../Admin_Setting/Admin_Settings.dart';
 import '../Calender/Calender.dart';
@@ -419,9 +421,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                       });
                                       Get.back();
                                       Get.back();
-                                      Get.to(Contacts(
-                                        automaticallyImplyLeading: true,
-                                        isFormConnect: true,),
+                                      Get.to(ExploreContacts(),
                                           transition: Transition.fadeIn,
                                           duration: Duration(
                                               milliseconds: 100));
@@ -653,9 +653,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        controller: adminHomeScreenController
-            .scrollController,
-
+        controller: adminHomeScreenController.scrollController,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -664,7 +662,19 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             children: [
               Obx(() {
                 if (addEventController.get.value) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child:  Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      width: 100.w,
+                      height: 180,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),);
                 }
                 if (addEventController.listOfEvent.isEmpty) {
                   return GifView.asset("assets/images/no-event.gif",);
@@ -706,8 +716,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     ),
                   );
                 }
-              }
-              ),
+              }),
               Obx(() {
                 return Column(
                   spacing: 18,
@@ -741,7 +750,43 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
                     Obx(() {
                       if (adminHomeScreenController.get.value) {
-                        return CircularProgressIndicator();
+                        return ListView.builder(
+                          itemCount: 5,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey.shade300,
+                                highlightColor: Colors.grey.shade100,
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CircleAvatar(radius: 20, backgroundColor: Colors.white),
+                                          SizedBox(width: 10),
+                                          Container(height: 10, width: 100, color: Colors.white),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(height: 10, width: double.infinity, color: Colors.white),
+                                      SizedBox(height: 5),
+                                      Container(height: 10, width: double.infinity, color: Colors.white),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       }
                       else if (adminHomeScreenController.listOfPost.isEmpty) {
                         return Text("No Post Found");

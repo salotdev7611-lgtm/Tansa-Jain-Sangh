@@ -26,7 +26,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final List<Widget> screens = [
     HomeScreenBottom(),
-    Contacts(automaticallyImplyLeading: false, isFormConnect: false,),
+    Contacts(automaticallyImplyLeading: false,),
     ChatAll(),
     Center(child: Text("Parentage Screen")),
     Vidhi(automaticallyImplyLeading: false,),

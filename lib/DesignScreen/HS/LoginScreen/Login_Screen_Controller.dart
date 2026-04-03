@@ -5,7 +5,9 @@ import 'package:family_app/DesignScreen/HS/Add%20Member/Add_Member_Controller.da
 import 'package:family_app/DesignScreen/HS/Add%20Member/Select_Father_Controller.dart';
 import 'package:family_app/DesignScreen/HS/Admin_Setting/Admin_Setting_Controller.dart';
 import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Bottom_Nav_Bar.dart';
+import 'package:family_app/DesignScreen/HS/HomeScreen/Admin_Home_Screen.dart';
 import 'package:family_app/DesignScreen/HS/HomeScreen/Bottom_Nav_Bar_Drawer.dart';
+import 'package:family_app/DesignScreen/HS/HomeScreen/Home_Screen_Bottom_Drawer.dart';
 import 'package:family_app/DesignScreen/HS/LoginScreen/LoginScreen.dart';
 import 'package:family_app/DesignScreen/HS/vidhi/Add_Vidhi_Controller.dart';
 import 'package:family_app/TextTheme/text_theme.dart';
@@ -389,7 +391,20 @@ class LoginScreenController extends GetxController {
                     ),
                   )));
 
-          Get.offAll(AddMemberUser(),transition: Transition.fadeIn,duration: Duration(milliseconds: 300));
+          if(houseId.value.isNotEmpty && role == "Admin"){
+            print(houseId.value.isNotEmpty);
+            print("Admin role");
+            Get.offAll(AdminBottomNavBar(),transition: Transition.fadeIn,duration: Duration(milliseconds: 300));
+          }
+          else if(houseId.value.isNotEmpty && role == "User"){
+            print("User role");
+            Get.offAll(BottomNavBarDrawer(),transition: Transition.fadeIn,duration: Duration(milliseconds: 300));
+          }
+          else{
+            print("object");
+            Get.offAll(AddMemberUser(),transition: Transition.fadeIn,duration: Duration(milliseconds: 300));
+          }
+
           otp.value = false;
           return true;
         }

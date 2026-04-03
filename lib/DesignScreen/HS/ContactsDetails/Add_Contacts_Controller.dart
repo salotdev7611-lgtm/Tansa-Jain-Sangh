@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:family_app/DesignScreen/HS/ContactsDetails/Contacts_Controller.dart';
+import 'package:family_app/DesignScreen/HS/ContactsDetails/Explore_Contacts_Controller.dart';
 import 'package:family_app/Helpers/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class AddContactsController extends GetxController{
 
   final AppColors appColors = Get.put(AppColors());
 
-  final ContactsController contactsController = Get.put(ContactsController());
+  final ExploreContactsController exploreContactsController = Get.put(ExploreContactsController());
 
   GlobalKey<FormState> memberDetails = GlobalKey();
   TextEditingController searchFather = TextEditingController();
@@ -299,7 +300,7 @@ class AddContactsController extends GetxController{
           print("object ${buildGrandParents()}");
           Get.back();
           add.value = false;
-          contactsController.mainMember("house_main_person");
+          exploreContactsController.mainMember("house_main_person");
           return true;
         }
         else{

@@ -11,11 +11,11 @@ class ParentageController extends GetxController {
   RxList<Map<String , dynamic>> listOfFamily = <Map<String,dynamic>>[].obs;
 
 
-  Future<void> getMember({required String memberId}) async {
+  Future<void> getMember({required String surname}) async {
     try{
 
       final response = await http.get(
-        Uri.parse("${ApiUrl.baseUrl}${ApiUrl.membersList}"),
+        Uri.parse("${ApiUrl.baseUrl}${ApiUrl.mainMember}&surname=$surname"),
         headers: {
           "Content-Type" : "application/json",
           "x-api-key" : ApiUrl.xApikey,

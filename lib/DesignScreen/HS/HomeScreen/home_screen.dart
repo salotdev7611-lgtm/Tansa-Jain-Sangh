@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(child: InkWell(
                         onTap: (){
                           Get.to(
-                            Contacts(automaticallyImplyLeading: true, isFormConnect: false,),
+                            Contacts(automaticallyImplyLeading: true,),
                             transition: Transition.fadeIn,
                             duration: Duration(milliseconds: 100),
                           );

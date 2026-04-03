@@ -1,3 +1,5 @@
+import 'package:family_app/DesignScreen/HS/Add%20Member/Add_Member_Controller.dart';
+import 'package:family_app/DesignScreen/HS/Parentage/Parentage_Controller.dart';
 import 'package:family_app/Helpers/app_colors.dart';
 import 'package:family_app/TextTheme/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +12,16 @@ class Parentage extends StatefulWidget {
   @override
   State<Parentage> createState() => _ParentageState();
 }
-
 class _ParentageState extends State<Parentage> {
+
+  final ParentageController parentageController = Get.put(ParentageController());
+  final AddMemberController addMemberController = Get.put(AddMemberController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    parentageController.getMember(surname: addMemberController.lastName.value.dropDownValue?.value?.toString() ?? "");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
