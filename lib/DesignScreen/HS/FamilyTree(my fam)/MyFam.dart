@@ -71,200 +71,72 @@ class _MyFamState extends State<MyFam> {
             return Center(child: Text("No Data Found"),);
           }
           else{
-            return Column(
-              spacing: 18,
-              children: [
-                Container(
-                  height: 100,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff14453D33).withValues(alpha: 0.8),
-                          spreadRadius: 0,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
+            return ListView.builder(
+              itemCount: myFamController.listOfMember.length,
+              itemBuilder: (context, index) {
+                final member = myFamController.listOfMember[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 18),
+                  child: Container(
+                    height: 100,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff14453D33).withValues(alpha: 0.8),
+                            spreadRadius: 0,
+                            blurRadius: 10,
+                            offset: Offset(0, 0),
+                          ),
+                        ]
+                    ),
+                    child: Row(
+                      spacing: 12,
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            shape: BoxShape.circle,
+                            image: DecorationImage(image:
+                            member["profile_img"] == null
+                                ? AssetImage("assets/images/no-image.png")
+                                : NetworkImage(member["profile_img"] ?? ""),
+                                fit: BoxFit.contain
+                            ),),
                         ),
-                      ]
-                  ),
-                  child: Row(
-                    spacing: 12,
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image:
-                          myFamController.listOfMember[0]["profile_img"] == null
-                              ? AssetImage("assets/images/no-image.png")
-                              : NetworkImage(myFamController.listOfMember[0]["profile_img"] ?? ""),
-                              fit: BoxFit.contain
-                          ),),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 12,),
-                          Text("${myFamController.listOfMember[0]["name"]} ${myFamController.listOfMember[0]["surname"]}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["mobile_no"]}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(myFamController.listOfMember[0]["dob"])),style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["blood_group"]}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                myFamController.listOfMember[0]["husband_wife_of"] == null
-                ? SizedBox()
-                : Container(
-                  height: 100,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff14453D33).withValues(alpha: 0.8),
-                          spreadRadius: 0,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 12,),
+                            Text("${member["name"] ?? ""} ${member["surname"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
+                            Text("${member["mobile_no"] ??""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
+                            Text(
+                              (member["dob"] != null && member["dob"].toString().isNotEmpty)
+                                  ? DateFormat("dd-MM-yyyy")
+                                  .format(DateTime.parse(member["dob"]))
+                                  : "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .body1SemiBold
+                                  .copyWith(color: AppColors.text),
+                            ),
+                            Text("${member["blood_group"]??""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
+                          ],
                         ),
-                      ]
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    spacing: 12,
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image:
-                          myFamController.listOfMember[0]["husband_wife_of"]["profile_img"] == null
-                              ? AssetImage("assets/images/no-image.png")
-                              : NetworkImage(myFamController.listOfMember[0]["husband_wife_of"]?["profile_img"] ?? ""),
-                              fit: BoxFit.contain
-                          ),),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 12,),
-                          Text("${myFamController.listOfMember[0]["husband_wife_of"]?["name"] ?? ""} ${myFamController.listOfMember[0]["husband_wife_of"]?["surname"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["husband_wife_of"]?["mobile_no"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(myFamController.listOfMember[0]["husband_wife_of"]?["dob"] ?? "")),style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["husband_wife_of"]?["blood_group"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 100,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff14453D33).withValues(alpha: 0.8),
-                          spreadRadius: 0,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
-                        ),
-                      ]
-                  ),
-                  child: Row(
-                    spacing: 12,
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image:
-                         myFamController.listOfMember[0]["father"]["profile_img"] == null
-                              ? AssetImage("assets/images/no-image.png")
-                              : NetworkImage(myFamController.listOfMember[0]["father"]["profile_img"]),
-                              fit: BoxFit.contain
-                          ),),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 12,),
-                          Text("${myFamController.listOfMember[0]["father"]["name"]} ${myFamController.listOfMember[0]["father"]["surname"]}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["father"]["mobile_no"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          myFamController.listOfMember[0]["father"]["dob"] == null
-                          ? SizedBox()
-                          : Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(myFamController.listOfMember[0]["father"]["dob"])),style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["father"]["blood_group"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 100,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff14453D33).withValues(alpha: 0.8),
-                          spreadRadius: 0,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
-                        ),
-                      ]
-                  ),
-                  child: Row(
-                    spacing: 12,
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image:
-                         myFamController.listOfMember[0]["mother"]["profile_img"] == null
-                              ? AssetImage("assets/images/no-image.png")
-                              : NetworkImage(myFamController.listOfMember[0]["mother"]["profile_img"]),
-                              fit: BoxFit.contain
-                          ),),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 12,),
-                          Text("${myFamController.listOfMember[0]["mother"]["name"]} ${myFamController.listOfMember[0]["mother"]["surname"]}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          Text("${myFamController.listOfMember[0]["mother"]["mobile_no"] ?? ""}",style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-                          myFamController.listOfMember[0]["mother"]["dob"] == null
-                          ? SizedBox()
-                          : Text(DateFormat("dd-MM-yyyy").format(DateTime.parse(myFamController.listOfMember[0]["mother"]["dob"] ?? "")),style: Theme.of(context).textTheme.body1SemiBold.copyWith(color: AppColors.text,),),
-
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
+                );
+            },);
           }
         },)
       ),
     );
   }
 }
+

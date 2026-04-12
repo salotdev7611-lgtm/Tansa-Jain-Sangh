@@ -770,9 +770,7 @@ class AdminSettingController extends GetxController {
           // selectedColor.value =appColors.selectedColor.value;
           appColors.selectedColor.value = selectedColor.value;
           // appColors.selectedColor.value=hexColor;
-          // Get.back();
-          Get.offAll(AdminBottomNavBar());
-
+          Get.back();
           ScaffoldMessenger.of(Get.context!).showSnackBar(
               SnackBar(
                   backgroundColor: Colors.transparent,

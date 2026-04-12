@@ -24,7 +24,7 @@ class MyFamController extends GetxController {
         }
       );
       get.value = true;
-      print("${ApiUrl.baseUrl}${ApiUrl.membersList}&family_house_id=${loginScreenController.houseId.value}");
+      print("sjdhjsdhjsdh${ApiUrl.baseUrl}${ApiUrl.membersList}&family_house_id=${loginScreenController.houseId.value}");
 
       if(response.statusCode == 200){
         final responseData = jsonDecode(response.body);
